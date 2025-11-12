@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>1-to-1 WebRTC Video Call</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    video { width: 45%; border-radius: 10px; background: #000; }
+    #videos { display: flex; justify-content: space-around; width: 100%; margin-top: 20px; }
+    button, input { padding: 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2>1-to-1 Video Call</h2>
+  <input id="room" placeholder="Room ID" value="demo-room">
+  <button id="joinBtn">Join Room</button>
+  <div id="videos">
+    <video id="localVideo" autoplay playsinline muted></video>
+    <video id="remoteVideo" autoplay playsinline></video>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
