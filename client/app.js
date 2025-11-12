@@ -1,4 +1,5 @@
-const socket = io("http://localhost:3000");
+// const socket = io("http://localhost:3000"); // --> this is for local testing
+const socket = io.connect(window.location.origin);
 const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
 const joinBtn = document.getElementById("joinBtn");
