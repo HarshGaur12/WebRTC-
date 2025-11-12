@@ -14,9 +14,10 @@ const config = {
     { urls: "stun:stun.l.google.com:19302" },
     {
       urls: [
+        "turns:relay1.expressturn.com:443", // TLS fallback
         "turn:relay1.expressturn.com:3478", // UDP
         "turn:relay1.expressturn.com:80",   // TCP fallback
-        "turns:relay1.expressturn.com:443"  // TLS fallback
+        
       ],
       username: "efree",         // public demo credentials
       credential: "efree"
@@ -90,6 +91,14 @@ async function startCall(isCaller){
 
     peerConnection.oniceconnectionstatechange = () => {
         console.log("🌐 ICE State:", peerConnection.iceConnectionState);
+        if(peerConnection.iceConnectionState === "failed"){
+            console.warn("ICE failed — retrying...");
+            peerConnection.restartIce();
+        }
+    };
+
+    peerConnection.onconnectionstatechange = () => {
+        console.log("📡 Connection State:", peerConnection.connectionState);
     };
 
 
@@ -109,6 +118,8 @@ async function startCall(isCaller){
     });
 
     if(isCaller){
+        console.log("🕒 Waiting 1 second before creating offer...");
+        await new Promise(r => setTimeout(r, 1000)); 
         const offer = await peerConnection.createOffer();
         await peerConnection.setLocalDescription(offer);
         socket.emit("offer", { roomId, offer });
