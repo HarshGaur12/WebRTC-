@@ -97,11 +97,11 @@ socket.on("peer-disconnected", () => {
 async function startCall(isCaller){
     peerConnection = new RTCPeerConnection(config);
 
-    peerConnection.oniceconnectionstatechange = () => {
+    peerConnection.oniceconnectionstatechange = async () => {
         console.log("🌐 ICE State:", peerConnection.iceConnectionState);
-        if(peerConnection.iceConnectionState === "failed"){
+        if(peerConnection.iceConnectionState === "failed" || peerConnection.iceConnectionState === "disconnected"){
             console.warn("ICE failed — retrying...");
-            peerConnection.restartIce();
+            await restartConnection();
         }
     };
 
@@ -132,4 +132,14 @@ async function startCall(isCaller){
         await peerConnection.setLocalDescription(offer);
         socket.emit("offer", { roomId, offer });
     }
+}
+
+async function restartConnection() {
+  if (!peerConnection || !roomId) return;
+  console.log("♻️ Restarting ICE...");
+
+  
+  const offer = await peerConnection.createOffer({ iceRestart: true });
+  await peerConnection.setLocalDescription(offer);
+  socket.emit("offer", { roomId, offer });
 }
