@@ -20,6 +20,13 @@ const config = {
       ],
       username: "efree",         // public demo credentials
       credential: "efree"
+    },
+    {
+      urls: [
+        "turn:singapore.xirsys.com:3478?transport=udp"
+      ],
+      username: "YOUR_XIRSYS_USERNAME",
+      credential: "YOUR_XIRSYS_CREDENTIAL"
     }
   ]
 };
