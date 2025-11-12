@@ -12,15 +12,23 @@ let peerConnection;
 const config = {
   iceServers: [
     { urls: "stun:stun.l.google.com:19302" },
+    // {
+    //   urls: [
+    //     "turns:relay1.expressturn.com:443", // TLS fallback
+    //     "turn:relay1.expressturn.com:3478", // UDP
+    //     "turn:relay1.expressturn.com:80",   // TCP fallback
+        
+    //   ],
+    //   username: "efree",         // public demo credentials
+    //   credential: "efree"
+    // }
     {
       urls: [
-        "turns:relay1.expressturn.com:443", // TLS fallback
-        "turn:relay1.expressturn.com:3478", // UDP
-        "turn:relay1.expressturn.com:80",   // TCP fallback
-        
+        "turns:global.relay.metered.ca:443?transport=tcp",  // secure TURN (TLS)
+        "turns:global.relay.metered.ca:443?transport=udp"   // secure TURN (TLS + UDP)
       ],
-      username: "efree",         // public demo credentials
-      credential: "efree"
+      username: "openaiwebrtc",
+      credential: "openai123"
     }
   ]
 };
