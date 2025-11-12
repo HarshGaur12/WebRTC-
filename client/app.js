@@ -13,14 +13,9 @@ const config = {
   iceServers: [
     { urls: "stun:stun.l.google.com:19302" },
     {
-      urls: [
-        "turns:relay1.expressturn.com:443", // TLS fallback
-        "turn:relay1.expressturn.com:3478", // UDP
-        "turn:relay1.expressturn.com:80",   // TCP fallback
-        
-      ],
-      username: "efree",         // public demo credentials
-      credential: "efree"
+      urls: "turn:relay.metered.ca:80",
+      username: "openai-demo",         // public demo credentials
+      credential: "openai-demo"
     }
 
   ]
