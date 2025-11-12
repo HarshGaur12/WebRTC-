@@ -20,13 +20,6 @@ const config = {
       ],
       username: "efree",         // public demo credentials
       credential: "efree"
-    },
-    {
-      urls: [
-        "turn:singapore.xirsys.com:3478?transport=udp"
-      ],
-      username: "YOUR_XIRSYS_USERNAME",
-      credential: "YOUR_XIRSYS_CREDENTIAL"
     }
   ]
 };
@@ -94,6 +87,11 @@ socket.on("peer-disconnected", () => {
 
 async function startCall(isCaller){
     peerConnection = new RTCPeerConnection(config);
+
+    peerConnection.oniceconnectionstatechange = () => {
+        console.log("🌐 ICE State:", peerConnection.iceConnectionState);
+    };
+
 
     peerConnection.onicecandidate = (event) => {
         if(event.candidate){
